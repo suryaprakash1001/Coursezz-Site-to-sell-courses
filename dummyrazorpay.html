@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Razorpay Payment Page</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+	<h1>My Razorpay Payment Page</h1>
+	<form>
+		<label for="amount">Amount:</label>
+		<input type="number" id="amount" name="amount" placeholder="Enter amount" required><br><br>
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name" placeholder="Enter name" required><br><br>
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" placeholder="Enter email" required><br><br>
+		<button id="rzp-button1">Pay</button>
+	</form>
+	<script>
+		var options = {
+			"key": "YOUR_RAZORPAY_KEY_ID",
+			"amount": "",
+			"name": "",
+			"description": "Payment for My Product",
+			"image": "https://yourwebsite.com/logo.png",
+			"handler": function (response){
+				alert("Payment successful!");
+			},
+			"prefill": {
+				"name": "",
+				"email": ""
+			},
+			"notes": {
+				"address": "Your Address"
+			},
+			"theme": {
+				"color": "#F37254"
+			}
+		};
+		$('#rzp-button1').click(function(e){
+			e.preventDefault();
+			options.amount = $('#amount').val() * 100; // Amount in paise
+			options.prefill.name = $('#name').val();
+			options.prefill.email = $('#email').val();
+			var rzp1 = new Razorpay(options);
+			rzp1.open();
+		});
+	</script>
+</body>
+</html>
